@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
         # MODIFICATION STARTS HERE
         clss = lst_args[0]
         d = {}
-        print("before for loop")
+        # print("before for loop")
         for element in lst_args[1:]:
             part_element = element.partition('=')
             key, value = part_element[0], part_element[-1]
@@ -134,10 +134,10 @@ class HBNBCommand(cmd.Cmd):
             if type(value) is str:
                 value = value.replace('_', ' ')
             d[key] = value
-            print(key, value)
-            print("added key value to dict")
-        print(d)
-        print("after for loop")
+            # print(key, value)
+            # print("added key value to dict")
+        # print(d)
+        # print("after for loop")
         new_instance = HBNBCommand.classes[clss]()
         new_instance.__dict__.update(d)
         # new_instance = eval(clss)(d)
