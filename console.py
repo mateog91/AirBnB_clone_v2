@@ -125,28 +125,25 @@ class HBNBCommand(cmd.Cmd):
             return
         # MODIFICATION STARTS HERE
         clss = lst_args[0]
-
-        new_instance = HBNBCommand.classes[lst_args[0]]()
+        d = {}
+        print("before for loop")
         for element in lst_args[1:]:
             part_element = element.partition('=')
-            name, value = part_element[0], part_element[2]
-            # if value is a string
-        try:
-            if value[0] == '"' and value[-1] == "":
+            key, value = part_element[0], part_element[-1]
+            value = eval(value)
+            if type(value) is str:
                 value = value.replace('_', ' ')
-                value = value
-                value = value.replace('\\', '')
-            elif '.' in value:
-                value = float(value)
-            else:
-                value = int(value)
-            setattr(new_instance, name, value)
-            print("here")
-        except:
-            pass
-        finally:
-            storage.save()
-            print(new_instance)
+            d[key] = value
+            print(key, value)
+            print("added key value to dict")
+        print(d)
+        print("after for loop")
+        new_instance = HBNBCommand.classes[clss]()
+        new_instance.__dict__.update(d)
+        # new_instance = eval(clss)(d)
+
+        storage.save()
+        print(new_instance)
 
     def help_create(self):
         """ Help information for the create method """
