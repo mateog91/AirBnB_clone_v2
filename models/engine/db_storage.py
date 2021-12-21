@@ -30,10 +30,6 @@ class DBStorage:
 
     def all(self, cls=None):
         """Query to DB to bring all objects (optional Class)"""
-        Base.metadata.create_all(self.__engine)
-        Session = sessionmaker(bind=self.__engine)
-        session = Session()
-
         classes = [Amenity, City, Place, Review, State, User]
 
         if cls is None:
@@ -43,7 +39,22 @@ class DBStorage:
 
                 dic.update({obj.__class__.__name__ + '.' +
                            obj.id: obj for obj in lst_objs})
+            session.close()
             return dic
         else:
             lst_objs = session.query(cls).all()
+            session.close()
             return {obj.__class__.__name__ + '.' + obj.id: obj for obj in lst_objs}
+
+    def new(self,obj):
+        """Add obj to DB"""
+        self.__session.add(obj)
+
+    def save(self):
+        """Commits the changes of the current session"""
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """Delete and object from  the session"""
+        if obj is not None:
+            self.__session.delete(obj)
