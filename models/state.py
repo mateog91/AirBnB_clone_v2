@@ -5,7 +5,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
 import os
-from models import storage
+import models
 from models.city import City
 
 
@@ -21,5 +21,6 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-            cities = storage.all(City)
+            """Getter of the cities"""
+            cities = models.storage.all(City)
             return [value for value in cities.values() if self.id == value.state_id]
