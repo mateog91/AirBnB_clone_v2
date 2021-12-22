@@ -94,6 +94,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, command):
         """ Method to exit the HBNB console"""
+
         exit()
 
     def help_quit(self):
@@ -126,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
         # MODIFICATION STARTS HERE
         clss = lst_args[0]
         d = {}
-        # print("before for loop")
+
         for element in lst_args[1:]:
             part_element = element.partition('=')
             key, value = part_element[0], part_element[-1]
@@ -134,13 +135,10 @@ class HBNBCommand(cmd.Cmd):
             if type(value) is str:
                 value = value.replace('_', ' ')
             d[key] = value
-            # print(key, value)
-            # print("added key value to dict")
-        # print(d)
-        # print("after for loop")
+
         new_instance = HBNBCommand.classes[clss]()
         new_instance.__dict__.update(d)
-        # new_instance = eval(clss)(d)
+        storage.new(new_instance)
 
         storage.save()
         print(new_instance.id)
@@ -225,11 +223,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all(args).items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
