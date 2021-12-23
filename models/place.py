@@ -1,12 +1,23 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+from typing import overload
 from sqlalchemy.orm import relationship
 import models
 from models import review
+from models import amenity
+from models.amenity import Amenity
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from models.review import Review
+from models.amenity import Amenity
 import os
+
+# Asociative Table
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', ForeignKey('places.id'),
+                             primary_key=True, nullable=False),
+                      Column('amenity_id', ForeignKey('amenities.id'),
+                             primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -22,11 +33,14 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    # amenity_ids = [] REVISAR!!!!!
+    amenity_ids = []
 
     HBNB_TYPE_STORAGE = os.getenv('HBNB_TYPE_STORAGE')
     if HBNB_TYPE_STORAGE == 'db':
         reviews = relationship('Review', backref='place', cascade='delete')
+
+        amenities = relationship(
+            'Amenity', secondary='place_amenity', viewonly=False, overlaps='place_amenity')
 
     else:
         @property
@@ -34,3 +48,14 @@ class Place(BaseModel, Base):
             """Getter of reviews"""
             reviews = models.storage.all(Review)
             return [value for value in reviews in reviews.values if self.id == value.place_id]
+
+        @property
+        def amenities(self):
+            """Getter for amenities"""
+            lst_obj_amenities = models.storage.all(Amenity)
+            return [value for value in lst_obj_amenities.values if value.id in self.amenity_ids]
+
+        @amenities.setter
+        def amenities(self, arg):
+            if isinstance(arg, Amenity):
+                return self.amenity_ids
