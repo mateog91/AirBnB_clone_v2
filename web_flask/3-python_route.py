@@ -34,7 +34,7 @@ def hello_hbnb3(text):
     return 'C {}'.format(text).replace('_', ' ')
 
 
-@app.route('/python', defaults={'text': ' is cool'})
+@app.route('/python', defaults={'text': 'is cool'})
 @ app.route('/python/<text>')
 def hello_hbnb4(text):
     """/python/(<text>): display “Python ”, followed by the value of the
