@@ -2,6 +2,8 @@
 """methods for flask web framework"""
 
 from cgitb import text
+from email.policy import default
+from selectors import DefaultSelector
 from flask import Flask
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -32,8 +34,9 @@ def hello_hbnb3(text):
     return 'C {}'.format(text).replace('_', ' ')
 
 
-@app.route('/python/<text>')
-def hello_hbnb4(text='is cool'):
+@app.route('/python', defaults={'text': ' is cool'})
+@ app.route('/python/<text>')
+def hello_hbnb4(text):
     """/python/(<text>): display “Python ”, followed by the value of the
     text variable (replace underscore _ symbols with a space ) """
     return 'Python {}'.format(text).replace('_', ' ')
