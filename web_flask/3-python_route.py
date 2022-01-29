@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 """methods for flask web framework"""
 
-from cgitb import text
-from email.policy import default
-from selectors import DefaultSelector
 from flask import Flask
 app = Flask(__name__)
 app.url_map.strict_slashes = False
