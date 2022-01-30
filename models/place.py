@@ -17,7 +17,7 @@ place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id', String(60),
                              ForeignKey('places.id'),
                              primary_key=True, nullable=False),
-                      Column('amenity_id', String (60),
+                      Column('amenity_id', String(60),
                              ForeignKey('amenities.id'),
                              primary_key=True, nullable=False))
 
@@ -61,4 +61,5 @@ class Place(BaseModel, Base):
         def amenities(self, arg):
             """Setter for amenities"""
             if isinstance(arg, Amenity):
-                amenity_ids.append(arg.id)
+                # amenity_id.append(arg.id)
+                self.amenity_ids.append(arg.id)
