@@ -34,7 +34,7 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    amenity_ids = []
+    # amenity_ids = []
 
     HBNB_TYPE_STORAGE = os.getenv('HBNB_TYPE_STORAGE')
     if HBNB_TYPE_STORAGE == 'db':
@@ -44,9 +44,9 @@ class Place(BaseModel, Base):
             'Amenity', secondary='place_amenity', viewonly=False, overlaps='place_amenities')
 
     else:
-        # def __init__(self, *args, **kwargs):
-        #     super().__init__(*args, **kwargs)
-        #     self.amenity_ids = []
+        def __init__(self, *args, amenity_ids=None, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.amenity_ids = [] if amenity_ids is None else amenity_ids
 
         @property
         def reviews(self):
