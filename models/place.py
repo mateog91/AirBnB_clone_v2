@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+from ast import arg
 from sqlalchemy.orm import relationship
 import models
 from models import review
@@ -43,6 +44,10 @@ class Place(BaseModel, Base):
             'Amenity', secondary='place_amenity', viewonly=False, overlaps='place_amenities')
 
     else:
+        # def __init__(self, *args, **kwargs):
+        #     super().__init__(*args, **kwargs)
+        #     self.amenity_ids = []
+
         @property
         def reviews(self):
             """Getter of reviews"""
@@ -53,11 +58,20 @@ class Place(BaseModel, Base):
         def amenities(self):
             """Getter for amenities"""
             lst_obj_amenities = models.storage.all(Amenity)
-            return [value for value in lst_obj_amenities.values() if value.id in self.amenity_ids]
 
-        @amenities.setter
-        def amenities(self, arg):
-            """Setter for amenities"""
-            if isinstance(arg, Amenity):
-                self.amenity_ids.append(arg.id)
-                # self.amenity_ids.append(arg.id)
+            return PlaceAmenities(
+                [value for value in lst_obj_amenities.values(
+                ) if value.id in self.amenity_ids],
+                place=self
+            )
+
+
+class PlaceAmenities(list):
+    def __init__(self, *args, place):
+        super().__init__(*args)
+        self.place = place
+
+    def append(self, arg):
+        """handle append method for setter"""
+        if isinstance(arg, Amenity):
+            self.place.amenity_ids.append(arg.id)
