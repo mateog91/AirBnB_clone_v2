@@ -41,7 +41,9 @@ class Place(BaseModel, Base):
         reviews = relationship('Review', backref='place', cascade='delete')
 
         amenities = relationship(
-            'Amenity', secondary='place_amenity', viewonly=False, overlaps='place_amenities')
+            'Amenity', secondary='place_amenity', viewonly=False,
+            overlaps='place_amenities'
+        )
 
     else:
         def __init__(self, *args, amenity_ids=None, **kwargs):
