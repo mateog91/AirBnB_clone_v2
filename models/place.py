@@ -34,7 +34,7 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    # amenity_ids = []
+    amenity_ids = []
 
     HBNB_TYPE_STORAGE = os.getenv('HBNB_TYPE_STORAGE')
     if HBNB_TYPE_STORAGE == 'db':
@@ -75,3 +75,4 @@ class PlaceAmenities(list):
         """handle append method for setter"""
         if isinstance(arg, Amenity):
             self.place.amenity_ids.append(arg.id)
+            super().append(arg)
