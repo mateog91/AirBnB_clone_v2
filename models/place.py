@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from typing import overload
 from sqlalchemy.orm import relationship
 import models
 from models import review
@@ -9,7 +8,6 @@ from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from models.review import Review
-from models.amenity import Amenity
 import os
 
 # Asociative Table
@@ -42,7 +40,7 @@ class Place(BaseModel, Base):
         reviews = relationship('Review', backref='place', cascade='delete')
 
         amenities = relationship(
-            'Amenity', secondary='place_amenity', viewonly=False, overlaps='place_amenity')
+            'Amenity', secondary='place_amenity', viewonly=False, overlaps='place_amenities')
 
     else:
         @property
@@ -55,11 +53,11 @@ class Place(BaseModel, Base):
         def amenities(self):
             """Getter for amenities"""
             lst_obj_amenities = models.storage.all(Amenity)
-            return [value for value in lst_obj_amenities.values if value.id in self.amenity_ids]
+            return [value for value in lst_obj_amenities.values() if value.id in self.amenity_ids]
 
         @amenities.setter
         def amenities(self, arg):
             """Setter for amenities"""
             if isinstance(arg, Amenity):
-                # amenity_id.append(arg.id)
                 self.amenity_ids.append(arg.id)
+                # self.amenity_ids.append(arg.id)
