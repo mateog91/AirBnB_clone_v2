@@ -59,7 +59,7 @@ def hello_hbnb6(n):
 
 @app.route('/number_odd_or_even/<int:n>')
 def hello_hbnb7(n):
-    """display a HTML page only if n is an integer: 
+    """display a HTML page only if n is an integer:
     H1 tag: “Number: n is even|odd” inside the tag BODY
     Args:
         n [int]: a number
