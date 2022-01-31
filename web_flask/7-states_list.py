@@ -1,19 +1,19 @@
 #!/usr/bin/python3
 """methos for flask"""
 
+from email.policy import strict
 from flask import Flask, render_template
+from models import *
 from models import storage
 from models.state import State
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
-
-states = storage.all(State).values()
 
 
-@app.route('/states_list')
+@app.route('/states_list', strict_slashes=False)
 def p_states():
     """renders states"""
+    states = storage.all(State).values()
     return render_template("7-states_list.html", states=states)
 
 
