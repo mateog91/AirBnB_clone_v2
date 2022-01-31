@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from ast import arg
 from sqlalchemy.orm import relationship
 import models
 from models import review
@@ -47,6 +46,7 @@ class Place(BaseModel, Base):
 
     else:
         def __init__(self, *args, amenity_ids=None, **kwargs):
+            """init method"""
             super().__init__(*args, **kwargs)
             self.amenity_ids = [] if amenity_ids is None else amenity_ids
 
@@ -70,7 +70,10 @@ class Place(BaseModel, Base):
 
 
 class PlaceAmenities(list):
+    """intermidiate class"""
+
     def __init__(self, *args, place):
+        """new int"""
         super().__init__(*args)
         self.place = place
 
