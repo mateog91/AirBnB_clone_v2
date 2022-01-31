@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""methos for flask"""
+"""
+Module for task 7
+"""
 
 from flask import Flask, render_template
 from models import storage
@@ -11,7 +13,9 @@ app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
 def teardown(self):
-    """closes session"""
+    """
+    closes session
+    """
     storage.close()
 
 
