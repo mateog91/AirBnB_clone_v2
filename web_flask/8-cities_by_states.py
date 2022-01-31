@@ -3,19 +3,17 @@
 
 from email.policy import strict
 from flask import Flask, render_template
-from models import *
 from models import storage
 from models.state import State
 from models.city import City
 
 app = Flask(__name__)
 
-states = storage.all(State).values()
-cities = storage.all(City).values()
-
 
 @app.route('/states_list', strict_slashes=False)
 def p_states():
+    states = storage.all(State).values()
+    cities = storage.all(City).values()
     """renders states"""
     return render_template("7-states_list.html", states=states, cities=cities)
 

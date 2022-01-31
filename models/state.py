@@ -11,14 +11,14 @@ from models.city import City
 HBNB_TYPE_STORAGE = os.getenv('HBNB_TYPE_STORAGE')
 if HBNB_TYPE_STORAGE == 'db':
     class State(BaseModel, Base):
-        """ State class """
+        """ State class that defines the states"""
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state', cascade='delete')
 
 else:
     class State(BaseModel):
-        """ State class """
+        """ State class that defines the states """
         name = ""
 
         @property

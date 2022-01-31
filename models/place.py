@@ -21,7 +21,7 @@ place_amenity = Table('place_amenity', Base.metadata,
 
 
 class Place(BaseModel, Base):
-    """ A place to stay """
+    """ Class Place that difines a place to stay """
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -46,7 +46,7 @@ class Place(BaseModel, Base):
 
     else:
         def __init__(self, *args, amenity_ids=None, **kwargs):
-            """init method"""
+            """init method for the initialization"""
             super().__init__(*args, **kwargs)
             self.amenity_ids = [] if amenity_ids is None else amenity_ids
 
@@ -70,10 +70,11 @@ class Place(BaseModel, Base):
 
 
 class PlaceAmenities(list):
-    """intermidiate class"""
+    """intermidiate class for place amenities
+        it is a list"""
 
     def __init__(self, *args, place):
-        """new int"""
+        """new int method for initialitation"""
         super().__init__(*args)
         self.place = place
 
