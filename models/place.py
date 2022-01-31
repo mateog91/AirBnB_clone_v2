@@ -62,7 +62,6 @@ class Place(BaseModel, Base):
         def amenities(self):
             """Getter for amenities"""
             lst_obj_amenities = models.storage.all(Amenity)
-
             return PlaceAmenities(
                 [value for value in lst_obj_amenities.values()
                     if value.id in self.amenity_ids],
