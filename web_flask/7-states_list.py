@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-starts with flask
+Module for task 7 that renders the webpage
 """
 from flask import Flask, render_template
 from models import storage
@@ -12,13 +12,13 @@ app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
 def teardown(self):
-    """Close session"""
+    """method teardown that closes correctly a session"""
     storage.close()
 
 
 @app.route('/states_list')
 def states():
-    """Display all states"""
+    """method states that Display all states"""
     states = storage.all(State).values()
     return render_template('7-states_list.html', states=states)
 
