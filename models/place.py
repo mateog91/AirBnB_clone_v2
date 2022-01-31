@@ -54,7 +54,8 @@ class Place(BaseModel, Base):
         def reviews(self):
             """Getter of reviews"""
             reviews = models.storage.all(Review)
-            return [value for value in reviews in reviews.values if self.id == value.place_id]
+            return [value for value in reviews in reviews.values
+                    if self.id == value.place_id]
 
         @property
         def amenities(self):

@@ -27,9 +27,10 @@ class DBStorage:
         HBNB_MYSQL_DB = os.getenv('HBNB_MYSQL_DB')
 
         self.__engine = create_engine(
-        'mysql+mysqldb://{}:{}@{}/{}'.format(HBNB_MYSQL_USER, HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST, HBNB_MYSQL_DB),
-                                             pool_pre_ping=True)
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
+                HBNB_MYSQL_USER, HBNB_MYSQL_PWD,
+                HBNB_MYSQL_HOST, HBNB_MYSQL_DB),
+            pool_pre_ping=True)
 
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -51,7 +52,8 @@ class DBStorage:
                 cls = eval(cls)
             lst_objs = self.__session.query(cls).all()
 
-            return {obj.__class__.__name__ + '.' + obj.id: obj for obj in lst_objs}
+            return {obj.__class__.__name__ + '.' + obj.id: obj
+                    for obj in lst_objs}
 
     def new(self, obj):
         """Add obj to DB"""

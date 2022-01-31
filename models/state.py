@@ -23,4 +23,5 @@ class State(BaseModel, Base):
         def cities(self):
             """Getter of the cities"""
             cities = models.storage.all(City)
-            return [value for value in cities.values() if self.id == value.state_id]
+            return [value for value in cities.values()
+                    if self.id == value.state_id]
