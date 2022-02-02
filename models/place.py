@@ -3,14 +3,14 @@
 from sqlalchemy.orm import relationship
 import models
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from models.review import Review
 import os
 
 HBNB_TYPE_STORAGE = os.getenv('HBNB_TYPE_STORAGE')
 if HBNB_TYPE_STORAGE == 'db':
-
+    from models.base_model import Base
     reviews = relationship('Review', backref='place', cascade='delete')
     # Asociative Table
     place_amenity = Table('place_amenity', Base.metadata,
